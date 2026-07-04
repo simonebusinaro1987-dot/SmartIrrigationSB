@@ -6,277 +6,76 @@
 <title>Smart Irrigation SB</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#071018">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Irrigation SB">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#071018;--card:#111f2c;--line:#263b4d;--txt:#edf7f1;--muted:#9fb2aa;
-  --green:#14b86f;--green2:#6cf0aa;--blue:#2f8cff;--red:#ff5f5f;--amber:#ffbe4d;
-  --shadow:0 12px 30px rgba(0,0,0,.34)
-}
+:root{--bg:#071018;--card:#111f2c;--line:#263b4d;--txt:#edf7f1;--muted:#9fb2aa;--green:#14b86f;--green2:#6cf0aa;--blue:#2f8cff;--red:#ff5f5f;--amber:#ffbe4d;--shadow:0 12px 30px rgba(0,0,0,.34)}
 html,body{margin:0;background:radial-gradient(circle at top,#12324a 0,#071018 45%,#050b10 100%);color:var(--txt);font-family:Arial,Helvetica,sans-serif}
-.app{max-width:520px;margin:auto;min-height:100dvh;padding:18px 16px 92px}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--green),#0c7152);display:grid;place-items:center;box-shadow:var(--shadow);font-size:25px}
-.brand h1{font-size:20px;margin:0;line-height:1.05}.brand span{font-size:12px;color:var(--muted)}
-.pill{border:1px solid var(--line);background:rgba(17,31,44,.75);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:13px;font-weight:800}
-.hero{border-radius:30px;padding:22px;background:linear-gradient(135deg,#13875c,#0c638c);box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;width:180px;height:180px;right:-70px;top:-70px;border-radius:50%;background:rgba(255,255,255,.10)}
+.app{max-width:520px;margin:auto;min-height:100dvh;padding:18px 16px 98px}
+.splash{position:fixed;inset:0;background:radial-gradient(circle at top,#174766,#071018 55%,#050b10);display:grid;place-items:center;z-index:99;transition:.4s}
+.splashBox{text-align:center}.splashLogo{width:92px;height:92px;border-radius:28px;background:linear-gradient(135deg,#14b86f,#0c638c);display:grid;place-items:center;margin:auto;font-size:52px;box-shadow:var(--shadow)}
+.splash h1{font-size:28px;margin:18px 0 6px}.splash p{color:var(--muted);margin:0}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.brand{display:flex;align-items:center;gap:10px}.logo{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--green),#0c7152);display:grid;place-items:center;box-shadow:var(--shadow);font-size:25px}
+.brand h1{font-size:20px;margin:0;line-height:1.05}.brand span{font-size:12px;color:var(--muted)}.pill{border:1px solid var(--line);background:rgba(17,31,44,.75);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:13px;font-weight:800}
+.hero{border-radius:30px;padding:22px;background:linear-gradient(135deg,#13875c,#0c638c);box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:180px;height:180px;right:-70px;top:-70px;border-radius:50%;background:rgba(255,255,255,.10)}
 .hero .label{font-size:13px;opacity:.82;font-weight:800}.hero .big{font-size:37px;font-weight:900;margin-top:4px}.hero .sub{font-size:14px;opacity:.86;margin-top:4px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{margin-top:13px;border:1px solid var(--line);border-radius:25px;background:linear-gradient(180deg,var(--card),#0d1924);padding:17px;box-shadow:0 10px 24px rgba(0,0,0,.22)}
-.cardHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.title{font-size:14px;color:var(--muted);font-weight:800}.ico{font-size:22px}
-.value{font-size:38px;font-weight:900;letter-spacing:-1px}.value small{font-size:18px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{margin-top:13px;border:1px solid var(--line);border-radius:25px;background:linear-gradient(180deg,var(--card),#0d1924);padding:17px;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+.cardHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.title{font-size:14px;color:var(--muted);font-weight:800}.ico{font-size:22px}.value{font-size:38px;font-weight:900;letter-spacing:-1px}.value small{font-size:18px;color:var(--muted)}
 .bar{height:16px;background:#263747;border-radius:99px;overflow:hidden;margin-top:12px}.fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--green2));transition:.35s}.fill.water{background:linear-gradient(90deg,#2f8cff,#79d6ff)}
-.state{font-size:24px;font-weight:900;margin-top:8px}.ok{color:var(--green2)}.bad{color:var(--red)}.warn{color:var(--amber)}
+.state{font-size:24px;font-weight:900;margin-top:8px}.ok{color:var(--green2)}.bad{color:var(--red)}
 .btn{width:100%;border:0;border-radius:19px;padding:15px;margin-top:10px;color:white;font-size:16px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.22);cursor:pointer}.btn:active{transform:scale(.985)}
-.green{background:linear-gradient(135deg,#12a865,#15c87a)}.red{background:linear-gradient(135deg,#dc4747,#ff6868)}.blue{background:linear-gradient(135deg,#1675ef,#42a1ff)}.dark{background:#263747}
-.segment{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}.segment .btn{font-size:14px;padding:13px 8px}
-.timerLine{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:9px;margin-top:12px}
-.field label{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:0 0 6px 2px}
-.field input{width:100%;height:52px;border-radius:16px;border:1px solid #31495c;background:#0a1520;color:#fff;text-align:center;font-size:20px;font-weight:900;outline:none}.field input:focus{border-color:var(--blue)}
+.green{background:linear-gradient(135deg,#12a865,#15c87a)}.red{background:linear-gradient(135deg,#dc4747,#ff6868)}.blue{background:linear-gradient(135deg,#1675ef,#42a1ff)}.dark{background:#263747}.amber{background:linear-gradient(135deg,#db8b20,#ffbe4d)}
+.timerLine{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:9px;margin-top:12px}.field label{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:0 0 6px 2px}.field input{width:100%;height:52px;border-radius:16px;border:1px solid #31495c;background:#0a1520;color:#fff;text-align:center;font-size:20px;font-weight:900;outline:none}
 .msg{font-size:13px;color:var(--muted);line-height:1.4;margin-top:10px}.page{display:none}.page.active{display:block}
-.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(8,18,27,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px;justify-content:center}
-.nav button{max-width:105px;flex:1;border:0;border-radius:17px;background:transparent;color:var(--muted);padding:10px 4px;font-weight:900;font-size:12px}.nav button.active{background:#163624;color:#fff}
-.cfg{width:100%;height:46px;border:1px solid #31495c;border-radius:15px;background:#0a1520;color:#fff;padding:0 12px;font-size:15px;margin-top:6px}
-.row{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.row b{font-size:14px}.row span{font-size:13px;color:var(--muted);text-align:right;word-break:break-all}
-.toast{position:fixed;left:18px;right:18px;bottom:88px;max-width:480px;margin:auto;background:#13283a;border:1px solid #2b4a61;border-radius:18px;padding:14px;color:#fff;box-shadow:var(--shadow);display:none;font-weight:800}
-
-.modalBg{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}
-.modal{max-width:460px;width:100%;background:#111f2c;border:1px solid #2b4a61;border-radius:26px;padding:20px;box-shadow:0 20px 44px rgba(0,0,0,.45)}
-.modal h2{margin:0 0 8px;font-size:24px}
-.modal p{color:#9fb2aa;line-height:1.45;margin:8px 0}
-.modalActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-
+.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(8,18,27,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:flex;gap:6px;justify-content:center}.nav button{max-width:102px;flex:1;border:0;border-radius:17px;background:transparent;color:var(--muted);padding:10px 2px;font-weight:900;font-size:11px}.nav button.active{background:#163624;color:#fff}
+.cfg{width:100%;height:46px;border:1px solid #31495c;border-radius:15px;background:#0a1520;color:#fff;padding:0 12px;font-size:15px;margin-top:6px}.row{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.row b{font-size:14px}.row span{font-size:13px;color:var(--muted);text-align:right;word-break:break-all}
+.toast{position:fixed;left:18px;right:18px;bottom:96px;max-width:480px;margin:auto;background:#13283a;border:1px solid #2b4a61;border-radius:18px;padding:14px;color:#fff;box-shadow:var(--shadow);display:none;font-weight:800;z-index:30}
+.modalBg{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal{max-width:460px;width:100%;background:#111f2c;border:1px solid #2b4a61;border-radius:26px;padding:20px;box-shadow:0 20px 44px rgba(0,0,0,.45)}.modal h2{margin:0 0 8px;font-size:24px}.modal p{color:#9fb2aa;line-height:1.45;margin:8px 0}.modalActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.check{display:flex;gap:10px;align-items:flex-start;margin-top:10px;color:#d7e8e1}.check span:first-child{color:#6cf0aa;font-weight:900}
 @media (min-width:700px){.app{padding-top:26px}.nav{max-width:520px;margin:auto;border-radius:26px 26px 0 0}}
 </style>
 </head>
 <body>
+<div class="splash" id="splash"><div class="splashBox"><div class="splashLogo">🌿</div><h1>Smart Irrigation SB</h1><p>Centralina irrigazione intelligente</p></div></div>
 <div class="app">
-  <div class="top">
-    <div class="brand">
-      <div class="logo">🌿</div>
-      <div><h1>Smart Irrigation SB</h1><span>Centralina irrigazione</span></div>
-    </div>
-    <div class="pill" id="connPill">Connessione...</div>
-  </div>
-
-  <section id="home" class="page active">
-    <div class="hero">
-      <div class="label">STATO IMPIANTO</div>
-      <div class="big" id="heroMode">---</div>
-      <div class="sub" id="heroSub">In attesa dei dati dalla centralina</div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="cardHeader"><div class="title">Umidità</div><div class="ico">🌱</div></div>
-        <div class="value"><span id="soil">--</span><small>%</small></div>
-        <div class="bar"><div id="soilBar" class="fill"></div></div>
-      </div>
-      <div class="card">
-        <div class="cardHeader"><div class="title">Serbatoio</div><div class="ico">💧</div></div>
-        <div class="value"><span id="water">--</span><small>%</small></div>
-        <div class="bar"><div id="waterBar" class="fill water"></div></div>
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="card"><div class="title">Pompa</div><div id="pump" class="state">---</div></div>
-      <div class="card"><div class="title">Modalità</div><div id="mode" class="state">---</div></div>
-    </div>
-
-    <div class="card">
-      <div class="title">Comando rapido</div>
-      <button class="btn green" onclick="sendCmd('PUMP_ON')">AVVIA POMPA</button>
-      <button class="btn red" onclick="sendCmd('PUMP_OFF')">FERMA POMPA</button>
-    </div>
-  </section>
-
-  <section id="timer" class="page">
-    <div class="hero">
-      <div class="label">PROGRAMMA</div>
-      <div class="big">Timer</div>
-      <div class="sub">Imposta ora e durata irrigazione</div>
-    </div>
-
-    <div class="card">
-      <div class="title">Accensione giornaliera</div>
-      <div class="timerLine">
-        <div class="field"><label>Ora</label><input id="th" type="number" min="0" max="23" value="6"></div>
-        <div class="field"><label>Minuti</label><input id="tm" type="number" min="0" max="59" value="0"></div>
-        <div class="field"><label>Durata min</label><input id="td" type="number" min="1" max="4" value="2"></div>
-      </div>
-      <button class="btn blue" onclick="saveTimer()">SALVA PROGRAMMA</button>
-      <div class="msg" id="timerMsg">Imposta il programma giornaliero della centralina.</div>
-    </div>
-  </section>
-
-  <section id="modePage" class="page">
-    <div class="hero">
-      <div class="label">FUNZIONAMENTO</div>
-      <div class="big">Modalità</div>
-      <div class="sub">Scegli come deve lavorare la centralina</div>
-    </div>
-    <div class="card">
-      <div class="title">Seleziona modalità</div>
-      <button class="btn dark" onclick="sendCmd('MODE_MANUAL')">MANUALE</button>
-      <button class="btn green" onclick="sendCmd('MODE_AUTO')">AUTOMATICA</button>
-      <button class="btn blue" onclick="sendCmd('MODE_TIMER')">TIMER</button>
-      <div class="msg">Modalità attuale: <b id="modeNow">---</b></div>
-    </div>
-  </section>
-
-
-  <section id="calib" class="page">
-    <div class="hero">
-      <div class="label">REGOLAZIONE</div>
-      <div class="big">Sensori</div>
-      <div class="sub">Calibrazione guidata per installazione</div>
-    </div>
-
-    <div class="card">
-      <div class="title">🌱 Sensore umidità terreno</div>
-      <div class="msg">Lascia il sensore all'asciutto e premi il primo pulsante. Poi inseriscilo nel terreno molto bagnato o in acqua e premi il secondo.</div>
-      <button class="btn dark" onclick="sendCmd('CAL_SOIL_DRY')">MEMORIZZA ASCIUTTO</button>
-      <button class="btn green" onclick="sendCmd('CAL_SOIL_WET')">MEMORIZZA BAGNATO</button>
-    </div>
-
-    <div class="card">
-      <div class="title">💧 Livello serbatoio</div>
-      <div class="msg">Con serbatoio vuoto premi “vuoto”. Con serbatoio pieno premi “pieno”.</div>
-      <button class="btn dark" onclick="sendCmd('CAL_TANK_EMPTY')">MEMORIZZA VUOTO</button>
-      <button class="btn blue" onclick="sendCmd('CAL_TANK_FULL')">MEMORIZZA PIENO</button>
-    </div>
-
-    <div class="card">
-      <div class="title">Nota</div>
-      <div class="msg">La calibrazione viene salvata dalla centralina. Dopo aver premuto un pulsante, controlla il valore aggiornato nella Home.</div>
-    </div>
-  </section>
-
-  <section id="settings" class="page">
-    <div class="hero">
-      <div class="label">RETE</div>
-      <div class="big">Wi‑Fi</div>
-      <div class="sub">Gestione connessione centralina</div>
-    </div>
-
-    <div class="card">
-      <div class="title">Rete collegata</div>
-      <div class="value" style="font-size:26px;letter-spacing:0"><span id="wifiName">Casa</span></div>
-      <div class="msg">La centralina è raggiungibile quando il telefono è sulla stessa rete Wi‑Fi, oppure tramite la Web App remota.</div>
-      <button class="btn blue" onclick="changeWifi()">CONFIGURA RETE WI‑FI</button>
-    </div>
-
-    <div class="card">
-      <div class="title">Assistenza</div>
-      <div class="row"><b>Versione</b><span>Smart Irrigation SB App v1.3</span></div>
-      <button class="btn dark" onclick="showAdvanced()">Impostazioni avanzate</button>
-    </div>
-
-    <div class="card" id="advanced" style="display:none">
-      <div class="title">Avanzate</div>
-      <label class="msg">Host</label><input class="cfg" id="host" value="fc6052288d93415f9e9a0622e25c9ef1.s1.eu.hivemq.cloud">
-      <label class="msg">Porta</label><input class="cfg" id="port" type="number" value="8884">
-      <label class="msg">Username</label><input class="cfg" id="user" value="Simone">
-      <label class="msg">Password</label><input class="cfg" id="pass" type="password" value="Simone.1987">
-      <label class="msg">Device ID</label><input class="cfg" id="dev" value="sb001">
-      <button class="btn blue" onclick="saveConfig()">SALVA</button>
-      <div class="msg">Da modificare solo in fase di installazione o assistenza.</div>
-    </div>
-  </section>
+<div class="top"><div class="brand"><div class="logo">🌿</div><div><h1>Smart Irrigation SB</h1><span>Centralina irrigazione</span></div></div><div class="pill" id="connPill">Connessione...</div></div>
+<section id="home" class="page active">
+<div class="hero"><div class="label">STATO IMPIANTO</div><div class="big" id="heroMode">---</div><div class="sub" id="heroSub">In attesa dei dati dalla centralina</div></div>
+<div class="grid2"><div class="card"><div class="cardHeader"><div class="title">Umidità</div><div class="ico">🌱</div></div><div class="value"><span id="soil">--</span><small>%</small></div><div class="bar"><div id="soilBar" class="fill"></div></div></div><div class="card"><div class="cardHeader"><div class="title">Serbatoio</div><div class="ico">💧</div></div><div class="value"><span id="water">--</span><small>%</small></div><div class="bar"><div id="waterBar" class="fill water"></div></div></div></div>
+<div class="grid2"><div class="card"><div class="title">Pompa</div><div id="pump" class="state">---</div></div><div class="card"><div class="title">Modalità</div><div id="mode" class="state">---</div></div></div>
+<div class="card"><div class="title">Comando rapido</div><button class="btn green" onclick="sendCmd('PUMP_ON')">AVVIA POMPA</button><button class="btn red" onclick="sendCmd('PUMP_OFF')">FERMA POMPA</button></div>
+</section>
+<section id="timer" class="page"><div class="hero"><div class="label">PROGRAMMA</div><div class="big">Timer</div><div class="sub">Imposta ora e durata irrigazione</div></div><div class="card"><div class="title">Accensione giornaliera</div><div class="timerLine"><div class="field"><label>Ora</label><input id="th" type="number" min="0" max="23" value="6"></div><div class="field"><label>Minuti</label><input id="tm" type="number" min="0" max="59" value="0"></div><div class="field"><label>Durata min</label><input id="td" type="number" min="1" max="4" value="2"></div></div><button class="btn blue" onclick="saveTimer()">SALVA PROGRAMMA</button><div class="msg" id="timerMsg">Imposta il programma giornaliero della centralina.</div></div></section>
+<section id="modePage" class="page"><div class="hero"><div class="label">FUNZIONAMENTO</div><div class="big">Modalità</div><div class="sub">Scegli come deve lavorare la centralina</div></div><div class="card"><div class="title">Seleziona modalità</div><button class="btn dark" onclick="sendCmd('MODE_MANUAL')">MANUALE</button><button class="btn green" onclick="sendCmd('MODE_AUTO')">AUTOMATICA</button><button class="btn blue" onclick="sendCmd('MODE_TIMER')">TIMER</button><div class="msg">Modalità attuale: <b id="modeNow">---</b></div></div></section>
+<section id="calib" class="page"><div class="hero"><div class="label">REGOLAZIONE</div><div class="big">Sensori</div><div class="sub">Calibrazione guidata per installazione</div></div><div class="card"><div class="title">🌱 Sensore umidità terreno</div><div class="msg">Lascia il sensore all'asciutto e premi il primo pulsante. Poi inseriscilo nel terreno molto bagnato o in acqua e premi il secondo.</div><button class="btn dark" onclick="sendCmd('CAL_SOIL_DRY')">MEMORIZZA ASCIUTTO</button><button class="btn green" onclick="sendCmd('CAL_SOIL_WET')">MEMORIZZA BAGNATO</button></div><div class="card"><div class="title">💧 Livello serbatoio</div><div class="msg">Con serbatoio vuoto premi “vuoto”. Con serbatoio pieno premi “pieno”.</div><button class="btn dark" onclick="sendCmd('CAL_TANK_EMPTY')">MEMORIZZA VUOTO</button><button class="btn blue" onclick="sendCmd('CAL_TANK_FULL')">MEMORIZZA PIENO</button></div></section>
+<section id="notify" class="page"><div class="hero"><div class="label">AVVISI</div><div class="big">Notifiche</div><div class="sub">Stato notifiche e prossimi avvisi Telegram</div></div><div class="card"><div class="title">Notifiche previste</div><div class="check"><span>✓</span><div>Serbatoio basso</div></div><div class="check"><span>✓</span><div>Irrigazione avviata</div></div><div class="check"><span>✓</span><div>Irrigazione terminata</div></div><div class="check"><span>✓</span><div>Centralina online/offline</div></div><div class="msg">Le notifiche Telegram saranno gratuite e funzioneranno anche fuori dalla rete Wi‑Fi. La configurazione del bot si farà nel firmware D1.</div><button class="btn amber" onclick="toast('Domani configuriamo Bot Telegram e chat_id')">CONFIGURA TELEGRAM</button></div></section>
+<section id="settings" class="page"><div class="hero"><div class="label">RETE</div><div class="big">Wi‑Fi</div><div class="sub">Gestione connessione centralina</div></div><div class="card"><div class="title">Rete collegata</div><div class="value" style="font-size:26px;letter-spacing:0"><span id="wifiName">Casa</span></div><div class="msg">La centralina è raggiungibile quando il telefono è sulla stessa rete Wi‑Fi, oppure tramite questa Web App remota.</div><button class="btn blue" onclick="changeWifi()">CONFIGURA RETE WI‑FI</button></div><div class="card"><div class="title">Installa sul telefono</div><div class="msg">Su Android premi “Installa App” se disponibile. Su iPhone usa Condividi → Aggiungi alla schermata Home.</div><button class="btn green" id="installBtn" onclick="installApp()" style="display:none">INSTALLA APP</button></div><div class="card"><div class="title">Assistenza</div><div class="row"><b>Versione</b><span>Smart Irrigation SB App 2.0</span></div><button class="btn dark" onclick="showAdvanced()">Impostazioni avanzate</button></div><div class="card" id="advanced" style="display:none"><div class="title">Avanzate</div><label class="msg">Host</label><input class="cfg" id="host" value="fc6052288d93415f9e9a0622e25c9ef1.s1.eu.hivemq.cloud"><label class="msg">Porta</label><input class="cfg" id="port" type="number" value="8884"><label class="msg">Username</label><input class="cfg" id="user" value="Simone"><label class="msg">Password</label><input class="cfg" id="pass" type="password" value="Simone.1987"><label class="msg">Device ID</label><input class="cfg" id="dev" value="sb001"><button class="btn blue" onclick="saveConfig()">SALVA</button><div class="msg">Da modificare solo in fase di installazione o assistenza.</div></div></section>
 </div>
-
-
-<div class="modalBg" id="wifiModal">
-  <div class="modal">
-    <h2>📶 Configurazione Wi‑Fi</h2>
-    <p>La centralina verrà riavviata per consentire la configurazione di una nuova rete Wi‑Fi.</p>
-    <p>Durante questa operazione il collegamento verrà interrotto per circa 30 secondi.</p>
-    <p>Vuoi continuare?</p>
-    <div class="modalActions">
-      <button class="btn dark" onclick="closeWifiModal()">ANNULLA</button>
-      <button class="btn blue" onclick="confirmWifiReset()">CONFIGURA</button>
-    </div>
-  </div>
-</div>
-
+<div class="modalBg" id="wifiModal"><div class="modal"><h2>📶 Configurazione Wi‑Fi</h2><p>La centralina verrà riavviata per consentire la configurazione di una nuova rete Wi‑Fi.</p><p>Durante questa operazione il collegamento verrà interrotto per circa 30 secondi.</p><p>Vuoi continuare?</p><div class="modalActions"><button class="btn dark" onclick="closeWifiModal()">ANNULLA</button><button class="btn blue" onclick="confirmWifiReset()">CONFIGURA</button></div></div></div>
 <div class="toast" id="toast"></div>
-
-<div class="nav">
-  <button id="bHome" class="active" onclick="showPage('home')">🏠<br>Home</button>
-  <button id="bTimer" onclick="showPage('timer')">⏰<br>Timer</button>
-  <button id="bMode" onclick="showPage('modePage')">🚰<br>Modo</button>
-  <button id="bCalib" onclick="showPage('calib')">🌱<br>Sensori</button>
-  <button id="bSettings" onclick="showPage('settings')">📶<br>Wi‑Fi</button>
-</div>
-
+<div class="nav"><button id="bHome" class="active" onclick="showPage('home')">🏠<br>Home</button><button id="bTimer" onclick="showPage('timer')">⏰<br>Timer</button><button id="bMode" onclick="showPage('modePage')">🚰<br>Modo</button><button id="bCalib" onclick="showPage('calib')">🌱<br>Sensori</button><button id="bNotify" onclick="showPage('notify')">🔔<br>Avvisi</button><button id="bSettings" onclick="showPage('settings')">📶<br>Wi‑Fi</button></div>
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
-let client=null, topicStatus='', topicCmd='';
-function toast(t){let el=document.getElementById('toast');el.innerText=t;el.style.display='block';setTimeout(()=>el.style.display='none',2200)}
+let client=null, topicStatus='', topicCmd='', deferredPrompt=null;
+setTimeout(()=>{let s=document.getElementById('splash');s.style.opacity='0';setTimeout(()=>s.style.display='none',420)},900)
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block'})
+function installApp(){if(!deferredPrompt){toast('Su iPhone usa Condividi → Aggiungi a Home');return}deferredPrompt.prompt();deferredPrompt=null;document.getElementById('installBtn').style.display='none'}
+function toast(t){let el=document.getElementById('toast');el.innerText=t;el.style.display='block';setTimeout(()=>el.style.display='none',2400)}
 function clamp(v){v=Number(v);if(isNaN(v))return 0;return Math.max(0,Math.min(100,v))}
 function translateMode(m){m=String(m||'---').toUpperCase(); if(m.includes('MANUAL'))return 'MANUALE'; if(m.includes('AUTO'))return 'AUTOMATICA'; if(m.includes('TIMER'))return 'TIMER'; return m;}
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id==='home'?'bHome':id==='timer'?'bTimer':id==='modePage'?'bMode':id==='calib'?'bCalib':'bSettings').classList.add('active');
-}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id==='home'?'bHome':id==='timer'?'bTimer':id==='modePage'?'bMode':id==='calib'?'bCalib':id==='notify'?'bNotify':'bSettings').classList.add('active')}
 function showAdvanced(){let a=document.getElementById('advanced');a.style.display=a.style.display==='none'?'block':'none'}
-function loadConfig(){
-  const d={host:'fc6052288d93415f9e9a0622e25c9ef1.s1.eu.hivemq.cloud',port:'8884',user:'Simone',pass:'Simone.1987',dev:'sb001'};
-  for(const k in d)document.getElementById(k).value=localStorage.getItem('sb_'+k)||d[k];
-}
+function loadConfig(){const d={host:'fc6052288d93415f9e9a0622e25c9ef1.s1.eu.hivemq.cloud',port:'8884',user:'Simone',pass:'Simone.1987',dev:'sb001'};for(const k in d)document.getElementById(k).value=localStorage.getItem('sb_'+k)||d[k]}
 function saveConfig(){['host','port','user','pass','dev'].forEach(k=>localStorage.setItem('sb_'+k,document.getElementById(k).value));toast('Configurazione salvata');connectMqtt()}
 function setConn(t,cls){let p=document.getElementById('connPill');p.innerText=t;p.style.color=cls==='ok'?'#6cf0aa':cls==='bad'?'#ff7777':'#9fb2aa'}
-function connectMqtt(){
-  if(client){try{client.end(true)}catch(e){}}
-  const host=document.getElementById('host').value.trim(),port=document.getElementById('port').value.trim();
-  const user=document.getElementById('user').value,pass=document.getElementById('pass').value,dev=document.getElementById('dev').value.trim();
-  topicStatus=`irrigazione/${dev}/status`; topicCmd=`irrigazione/${dev}/cmd`;
-  setConn('Connessione...');
-  client=mqtt.connect(`wss://${host}:${port}/mqtt`,{username:user,password:pass,clientId:'SB_APP_'+Math.random().toString(16).slice(2),clean:true,reconnectPeriod:3000,connectTimeout:8000});
-  client.on('connect',()=>{setConn('Online','ok');client.subscribe(topicStatus);toast('Centralina collegata')});
-  client.on('reconnect',()=>setConn('Ricerca...'));
-  client.on('offline',()=>setConn('Offline','bad'));
-  client.on('error',()=>setConn('Errore','bad'));
-  client.on('message',(t,p)=>{if(t===topicStatus){try{updateData(JSON.parse(p.toString()))}catch(e){}}});
-}
-function updateData(d){
-  let soil=clamp(d.soil),water=clamp(d.water);
-  document.getElementById('soil').innerText=d.soil ?? '--';
-  document.getElementById('water').innerText=d.water ?? '--';
-  document.getElementById('soilBar').style.width=soil+'%';
-  document.getElementById('waterBar').style.width=water+'%';
-  let pumpOn=(d.pump==1||String(d.pump).toUpperCase()==='ON');
-  let pump=document.getElementById('pump');pump.innerText=pumpOn?'ACCESA':'SPENTA';pump.className=pumpOn?'state ok':'state bad';
-  let mode=translateMode(d.mode);
-  document.getElementById('mode').innerText=mode;document.getElementById('modeNow').innerText=mode;document.getElementById('heroMode').innerText=mode;
-  document.getElementById('heroSub').innerText=pumpOn?'Irrigazione in corso':'Centralina pronta';
-  if(d.wifi) document.getElementById('wifiName').innerText=d.wifi;
-}
-function sendCmd(cmd){if(!client||!client.connected){toast('Centralina non collegata');return}client.publish(topicCmd,cmd);toast(cmd.startsWith('CAL_') ? 'Calibrazione inviata' : 'Comando inviato')}
-function saveTimer(){
-  let h=Math.max(0,Math.min(23,parseInt(document.getElementById('th').value||0)));
-  let m=Math.max(0,Math.min(59,parseInt(document.getElementById('tm').value||0)));
-  let min=Math.max(1,Math.min(4,parseInt(document.getElementById('td').value||1)));
-  let cmd=`SET_TIMER,${String(h).padStart(2,'0')},${String(m).padStart(2,'0')},${min*60}`;
-  sendCmd(cmd);document.getElementById('timerMsg').innerText='Programma salvato: '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' per '+min+' min';
-}
-function changeWifi(){
-  document.getElementById('wifiModal').style.display='flex';
-}
-function closeWifiModal(){
-  document.getElementById('wifiModal').style.display='none';
-}
-function confirmWifiReset(){
-  closeWifiModal();
-  sendCmd('RESET_WIFI');
-  toast('Attendere: la centralina si sta riavviando');
-  setTimeout(()=>toast('Cerca la rete "Smart Irrigation SB Setup" per configurare il Wi‑Fi'),6000);
-}
+function connectMqtt(){if(client){try{client.end(true)}catch(e){}}const host=document.getElementById('host').value.trim(),port=document.getElementById('port').value.trim(),user=document.getElementById('user').value,pass=document.getElementById('pass').value,dev=document.getElementById('dev').value.trim();topicStatus=`irrigazione/${dev}/status`; topicCmd=`irrigazione/${dev}/cmd`; setConn('Connessione...');client=mqtt.connect(`wss://${host}:${port}/mqtt`,{username:user,password:pass,clientId:'SB_APP2_'+Math.random().toString(16).slice(2),clean:true,reconnectPeriod:3000,connectTimeout:8000});client.on('connect',()=>{setConn('Online','ok');client.subscribe(topicStatus);toast('Centralina collegata')});client.on('reconnect',()=>setConn('Ricerca...')); client.on('offline',()=>setConn('Offline','bad')); client.on('error',()=>setConn('Errore','bad'));client.on('message',(t,p)=>{if(t===topicStatus){try{updateData(JSON.parse(p.toString()))}catch(e){}}})}
+function updateData(d){let soil=clamp(d.soil),water=clamp(d.water);document.getElementById('soil').innerText=d.soil ?? '--'; document.getElementById('water').innerText=d.water ?? '--';document.getElementById('soilBar').style.width=soil+'%'; document.getElementById('waterBar').style.width=water+'%';let pumpOn=(d.pump==1||String(d.pump).toUpperCase()==='ON');let pump=document.getElementById('pump');pump.innerText=pumpOn?'ACCESA':'SPENTA';pump.className=pumpOn?'state ok':'state bad';let mode=translateMode(d.mode); document.getElementById('mode').innerText=mode;document.getElementById('modeNow').innerText=mode;document.getElementById('heroMode').innerText=mode;document.getElementById('heroSub').innerText=pumpOn?'Irrigazione in corso':'Centralina pronta';if(d.wifi) document.getElementById('wifiName').innerText=d.wifi}
+function sendCmd(cmd){if(!client||!client.connected){toast('Centralina non collegata');return}client.publish(topicCmd,cmd);toast(cmd.startsWith('CAL_')?'Calibrazione inviata':'Comando inviato')}
+function saveTimer(){let h=Math.max(0,Math.min(23,parseInt(document.getElementById('th').value||0)));let m=Math.max(0,Math.min(59,parseInt(document.getElementById('tm').value||0)));let min=Math.max(1,Math.min(4,parseInt(document.getElementById('td').value||1)));let cmd=`SET_TIMER,${String(h).padStart(2,'0')},${String(m).padStart(2,'0')},${min*60}`;sendCmd(cmd);document.getElementById('timerMsg').innerText='Programma salvato: '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' per '+min+' min'}
+function changeWifi(){document.getElementById('wifiModal').style.display='flex'}function closeWifiModal(){document.getElementById('wifiModal').style.display='none'}function confirmWifiReset(){closeWifiModal();sendCmd('RESET_WIFI');toast('Attendere: la centralina si sta riavviando');setTimeout(()=>toast('Cerca la rete "Smart Irrigation SB Setup"'),6000)}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 loadConfig();connectMqtt();
 </script>
 </body>
