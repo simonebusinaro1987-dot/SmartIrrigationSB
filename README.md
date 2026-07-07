@@ -1,6 +1,5 @@
-# Smart Irrigation SB Web App 2.1
+# Smart Irrigation SB Web App 2.4
 
-Modifica:
-- La pagina Avvisi non mostra più "Domani configuriamo Telegram".
-- Il pulsante ora invia il comando TEST_TELEGRAM al D1.
-- Se il firmware D1 Telegram è caricato e il token è inserito, arriva il messaggio Telegram di prova.
+Aggiunto menu Tipo impianto:
+- Serbatoio + pompa: usa sensori, livello acqua, calibrazione e notifiche complete.
+- Elettrovalvola normale: nasconde sensori/serbatoio e usa i comandi apertura/chiusura.
